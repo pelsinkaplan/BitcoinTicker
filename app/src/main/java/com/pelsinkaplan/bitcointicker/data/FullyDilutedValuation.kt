@@ -1,0 +1,3 @@
+package com.pelsinkaplan.bitcointicker.data
+
+class FullyDilutedValuation

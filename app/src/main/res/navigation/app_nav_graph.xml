@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/app_nav_graph"
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/allCoinFragment"
+        android:name="com.pelsinkaplan.bitcointicker.ui.allcoin.AllCoinFragment"
+        android:label="fragment_all_coin"
+        tools:layout="@layout/all_coin_fragment" >
+        <action
+            android:id="@+id/action_allCoinFragment_to_coinDetailFragment"
+            app:destination="@id/coinDetailFragment" />
+        <argument
+            android:name="userId"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_allCoinFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_allCoinFragment_to_favoritesFragment"
+            app:destination="@id/favoritesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/coinDetailFragment"
+        android:name="com.pelsinkaplan.bitcointicker.ui.coindetail.CoinDetailFragment"
+        android:label="fragment_coin_detail"
+        tools:layout="@layout/coin_detail_fragment" >
+        <argument
+            android:name="id"
+            app:argType="string" />
+        <argument
+            android:name="userId"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.pelsinkaplan.bitcointicker.ui.register.RegisterFragment"
+        android:label="register_fragment"
+        tools:layout="@layout/register_fragment" >
+        <action
+            android:id="@+id/action_registerFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.pelsinkaplan.bitcointicker.ui.login.LoginFragment"
+        android:label="login_fragment"
+        tools:layout="@layout/login_fragment" >
+        <action
+            android:id="@+id/action_loginFragment_to_allCoinFragment"
+            app:destination="@id/allCoinFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_registerFragment"
+            app:destination="@id/registerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/favoritesFragment"
+        android:name="com.pelsinkaplan.bitcointicker.ui.favorites.FavoritesFragment"
+        android:label="favorites_fragment"
+        tools:layout="@layout/favorites_fragment" >
+        <action
+            android:id="@+id/action_favoritesFragment_to_coinDetailFragment"
+            app:destination="@id/coinDetailFragment" />
+        <argument
+            android:name="userId"
+            app:argType="string" />
+    </fragment>
+</navigation>
