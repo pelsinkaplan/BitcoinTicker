@@ -7,22 +7,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
-import com.google.firebase.auth.FirebaseAuth
-import com.pelsinkaplan.bitcointicker.R
-import com.pelsinkaplan.bitcointicker.data.CoinListItem
 import com.pelsinkaplan.bitcointicker.databinding.FavoritesFragmentBinding
-import com.pelsinkaplan.bitcointicker.databinding.FragmentAllCoinBinding
 import com.pelsinkaplan.bitcointicker.service.network.RetrofitAPI
-import com.pelsinkaplan.bitcointicker.ui.allcoin.AllCoinAdapter
-import com.pelsinkaplan.bitcointicker.ui.allcoin.AllCoinFragmentArgs
-import com.pelsinkaplan.bitcointicker.ui.allcoin.AllCoinFragmentDirections
-import com.pelsinkaplan.bitcointicker.ui.allcoin.AllCoinViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class FavoritesFragment : Fragment() {
 
     private lateinit var binding: FavoritesFragmentBinding

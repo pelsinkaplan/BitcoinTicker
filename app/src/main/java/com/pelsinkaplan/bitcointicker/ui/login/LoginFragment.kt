@@ -11,11 +11,7 @@ import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
 import com.google.firebase.auth.FirebaseAuth
-import com.pelsinkaplan.bitcointicker.R
-import com.pelsinkaplan.bitcointicker.databinding.FragmentAllCoinBinding
 import com.pelsinkaplan.bitcointicker.databinding.LoginFragmentBinding
-import com.pelsinkaplan.bitcointicker.ui.allcoin.AllCoinViewModel
-import com.pelsinkaplan.bitcointicker.ui.register.RegisterFragmentDirections
 
 class LoginFragment : Fragment() {
 

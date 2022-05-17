@@ -91,6 +91,21 @@
             android:gravity="center|center_horizontal"
             android:orientation="vertical">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Current Price"
+                android:textAlignment="center"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/current_price_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="XXXXXXXXXXXXXXXXXXX"
+                android:textSize="18sp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -129,22 +144,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Current Price"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/current_price_textview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:text="XXXXXXXXXXXXXXXXXXX"
-                android:textSize="18sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:text="Price Change Percentage (last 24h)"
                 android:textAlignment="center"
                 android:textSize="20sp"
@@ -158,12 +157,29 @@
                 android:text="XXXXXXXXXXXXXXXXXXX"
                 android:textSize="18sp" />
 
-            <EditText
-                android:id="@+id/refrech_interval_edittext"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:hint="Refresh Interval" />
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/refresh_interval_edittext"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="10dp"
+                    android:hint="Refresh Interval (minute) "
+                    android:inputType="number" />
+
+                <Button
+                    android:id="@+id/ok_button"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/ic_ok" />
+            </LinearLayout>
+
+
         </LinearLayout>
 
     </ScrollView>

@@ -8,10 +8,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.pelsinkaplan.bitcointicker.data.CoinListItem
-import com.pelsinkaplan.bitcointicker.databinding.FragmentAllCoinBinding
+import com.pelsinkaplan.bitcointicker.databinding.AllCoinFragmentBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -20,7 +19,7 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class AllCoinFragment : Fragment() {
 
-    private lateinit var binding: FragmentAllCoinBinding
+    private lateinit var binding: AllCoinFragmentBinding
     private lateinit var viewModel: AllCoinViewModel
     val adapter = AllCoinAdapter()
 
@@ -34,7 +33,7 @@ class AllCoinFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentAllCoinBinding.inflate(inflater, container, false);
+        binding = AllCoinFragmentBinding.inflate(inflater, container, false);
         return binding.root
     }
 
@@ -55,14 +54,10 @@ class AllCoinFragment : Fragment() {
         }
         apiRequest(userId)
 
-
-        // Refresh function for the layout
-        binding.refreshSwipeLayout.setOnRefreshListener {
-
-            apiRequest(userId); // your code
-
-            binding.refreshSwipeLayout.setRefreshing(false)
-        }
+//        binding.refreshSwipeLayout.setOnRefreshListener {
+//            apiRequest(userId)
+//            binding.refreshSwipeLayout.setRefreshing(false)
+//        }
     }
 
 
