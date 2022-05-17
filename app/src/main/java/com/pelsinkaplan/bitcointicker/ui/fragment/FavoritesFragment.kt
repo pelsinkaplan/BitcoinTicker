@@ -1,15 +1,18 @@
-package com.pelsinkaplan.bitcointicker.ui.favorites
+package com.pelsinkaplan.bitcointicker.ui.fragment
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.pelsinkaplan.bitcointicker.R
+import com.pelsinkaplan.bitcointicker.data.CoinDetail
 import com.pelsinkaplan.bitcointicker.databinding.FavoritesFragmentBinding
-import com.pelsinkaplan.bitcointicker.service.network.RetrofitAPI
+import com.pelsinkaplan.bitcointicker.ui.Adapter
+import com.pelsinkaplan.bitcointicker.ui.viewmodel.FavoritesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -20,7 +23,7 @@ class FavoritesFragment : Fragment() {
 
     private lateinit var binding: FavoritesFragmentBinding
     private lateinit var viewModel: FavoritesViewModel
-    val adapter = FavoritesAdapter()
+    private val adapter = Adapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,17 +43,17 @@ class FavoritesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val coinService: FavoritesFragmentArgs by navArgs()
         val userId = coinService.userId
-        var list = listOf<String>()
-        var retrofitAPI: RetrofitAPI
-        CoroutineScope(Dispatchers.Main).launch {
-            retrofitAPI = viewModel.service(userId)
-            viewModel.favList.observe(viewLifecycleOwner) {
-                list = it
-                binding.recyclerview.adapter = adapter
-                adapter.setCoinsList(list, userId, retrofitAPI)
-            }
+        var list: List<CoinDetail>
+        viewModel.getFavoritesCoinIdList(userId)
+        viewModel.favList.observe(viewLifecycleOwner) {
+            CoroutineScope(Dispatchers.Main).launch {
+                viewModel.getFavoritesCoinList(it)
+                viewModel.favCoinList.observe(viewLifecycleOwner) { list ->
+                    binding.recyclerview.adapter = adapter
+                    adapter.setCoinsList(list, userId)
+                }
 
+            }
         }
     }
-
 }

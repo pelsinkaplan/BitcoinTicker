@@ -1,7 +1,7 @@
-package com.pelsinkaplan.bitcointicker.ui.coindetail
+package com.pelsinkaplan.bitcointicker.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.pelsinkaplan.bitcointicker.data.CoinDetail
+import com.pelsinkaplan.bitcointicker.data.CoinList
 import com.pelsinkaplan.bitcointicker.service.network.RetrofitAPI
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -9,13 +9,14 @@ import javax.inject.Inject
 /**
  * Created by Pelşin KAPLAN on 13.05.2022.
  */
+
 @HiltViewModel
-class CoinDetailViewModel @Inject constructor(
+class AllCoinViewModel @Inject constructor(
     private val retrofitAPI: RetrofitAPI
 ) : ViewModel() {
 
-    suspend fun service(id: String): CoinDetail? {
-        val dataResponse = retrofitAPI.getCoinsById(id)
+    suspend fun service(): CoinList? {
+        val dataResponse = retrofitAPI.getCoinsList()
         if (dataResponse.isSuccessful)
             return dataResponse.body()
         return null

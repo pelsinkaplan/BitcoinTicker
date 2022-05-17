@@ -1,4 +1,4 @@
-package com.pelsinkaplan.bitcointicker.ui.coindetail
+package com.pelsinkaplan.bitcointicker.ui.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.work.*
 import com.bumptech.glide.Glide
@@ -14,6 +15,7 @@ import com.pelsinkaplan.bitcointicker.R
 import com.pelsinkaplan.bitcointicker.data.CoinDetail
 import com.pelsinkaplan.bitcointicker.databinding.CoinDetailFragmentBinding
 import com.pelsinkaplan.bitcointicker.service.CoinWorker
+import com.pelsinkaplan.bitcointicker.ui.viewmodel.CoinDetailViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -71,18 +73,19 @@ class CoinDetailFragment : Fragment() {
                     .setRequiredNetworkType(NetworkType.CONNECTED)
                     .build()
 
-                val coin = Data.Builder()
-                coin.putString("coinId", coinId)
-                val user = Data.Builder()
-                user.putString("userId", userId)
+                val data = Data.Builder()
+                val map = HashMap<String, Any>()
+                map["coinId"] = coinId
+                map["userId"] = userId
+                data.putAll(map)
+
 
                 periodicWorkRequest =
                     PeriodicWorkRequestBuilder<CoinWorker>(
-                        refreshInterval.toString().toInt().toLong(), TimeUnit.MINUTES
+                        refreshInterval.toString().toInt().toLong(), TimeUnit.SECONDS
                     )
                         .setConstraints(workCondition)
-                        .setInputData(coin.build())
-                        .setInputData(user.build())
+                        .setInputData(data.build())
                         .build()
 
                 WorkManager.getInstance(requireContext())
@@ -104,8 +107,9 @@ class CoinDetailFragment : Fragment() {
         binding.apply {
             coinSymbolTextview.text = coinDetail.symbol
             coinNameTextview.text = coinDetail.name
+            changePercentageTextview.text = coinDetail.market_data.atl_change_percentage.usd.toString()
             descriptionTextview.text = coinDetail.description.en
-            currentPriceTextview.text = coinDetail.market_data.current_price.toString()
+            currentPriceTextview.text = coinDetail.market_data.current_price.usd.toString()
             hashingAlgorithmTextview.text = coinDetail.hashing_algorithm
             Glide.with(requireActivity())
                 .load(coinDetail.image.large)

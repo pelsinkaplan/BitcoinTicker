@@ -1,4 +1,4 @@
-package com.pelsinkaplan.bitcointicker.ui.register
+package com.pelsinkaplan.bitcointicker.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 

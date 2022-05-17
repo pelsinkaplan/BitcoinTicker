@@ -4,9 +4,9 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/layout/activity_google_sign_in.xml" value="0.36302083333333335" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.19317169189453126" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/all_coin_fragment.xml" value="0.16296296296296298" />
-        <entry key="app/src/main/res/layout/coin_detail_fragment.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/coin_detail_fragment.xml" value="0.335" />
         <entry key="app/src/main/res/layout/content_google_sign_in.xml" value="0.36302083333333335" />
         <entry key="app/src/main/res/layout/favorites_fragment.xml" value="0.22" />
         <entry key="app/src/main/res/layout/fragment_all_coin.xml" value="0.25" />
@@ -17,6 +17,7 @@
         <entry key="app/src/main/res/layout/login_fragment.xml" value="0.27395833333333336" />
         <entry key="app/src/main/res/layout/notifications_fragment.xml" value="0.2078125" />
         <entry key="app/src/main/res/layout/register_fragment.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/toolbar.xml" value="0.37604166666666666" />
       </map>
     </option>
   </component>

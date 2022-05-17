@@ -2,22 +2,21 @@ package com.pelsinkaplan.bitcointicker.ui
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
-import com.pelsinkaplan.bitcointicker.data.CoinListItem
+import com.pelsinkaplan.bitcointicker.data.CoinDetail
 import com.pelsinkaplan.bitcointicker.databinding.ItemCoinBinding
-import com.pelsinkaplan.bitcointicker.ui.allcoin.AllCoinFragmentDirections
+import com.pelsinkaplan.bitcointicker.ui.utils.NavigationManager
 
 /**
  * Created by Pelşin KAPLAN on 17.05.2022.
  */
 class Adapter : RecyclerView.Adapter<CoinListViewHolder>() {
 
-    private var coinList = mutableListOf<CoinListItem>()
+    private var coinList = mutableListOf<CoinDetail>()
 
     lateinit var userId: String
 
-    fun setCoinsList(coinList: List<CoinListItem>, userId: String) {
+    fun setCoinsList(coinList: List<CoinDetail>, userId: String) {
         this.coinList = coinList.toMutableList()
         this.userId = userId
         notifyDataSetChanged()
@@ -39,10 +38,11 @@ class Adapter : RecyclerView.Adapter<CoinListViewHolder>() {
         holder.binding.coinSymbolTextview.text = coin.symbol
 
         holder.binding.itemCardview.setOnClickListener {
-            val action = AllCoinFragmentDirections.actionAllCoinFragmentToCoinDetailFragment(
-                coin.id, userId
+            NavigationManager().actionAllCoinFragmentToCoinDetailFragment(
+                holder.itemView,
+                coin.id,
+                userId
             )
-            Navigation.findNavController(holder.binding.itemCardview).navigate(action)
         }
     }
 

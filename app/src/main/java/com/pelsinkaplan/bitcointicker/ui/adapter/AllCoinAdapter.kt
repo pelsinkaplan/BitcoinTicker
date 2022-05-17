@@ -1,4 +1,4 @@
-package com.pelsinkaplan.bitcointicker.ui.notifications
+package com.pelsinkaplan.bitcointicker.ui.allcoin
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,12 +6,13 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.pelsinkaplan.bitcointicker.data.CoinListItem
 import com.pelsinkaplan.bitcointicker.databinding.ItemCoinBinding
-import com.pelsinkaplan.bitcointicker.ui.allcoin.AllCoinFragmentDirections
+import com.pelsinkaplan.bitcointicker.ui.fragment.AllCoinFragmentDirections
+import com.pelsinkaplan.bitcointicker.ui.utils.NavigationManager
 
 /**
- * Created by Pelşin KAPLAN on 17.05.2022.
+ * Created by Pelşin KAPLAN on 13.05.2022.
  */
-class NotificationsAdapter : RecyclerView.Adapter<NotificationsViewHolder>() {
+class AllCoinAdapter : RecyclerView.Adapter<CoinListViewHolder>() {
 
     private var coinList = mutableListOf<CoinListItem>()
 
@@ -24,25 +25,26 @@ class NotificationsAdapter : RecyclerView.Adapter<NotificationsViewHolder>() {
     }
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotificationsViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CoinListViewHolder {
         val inflater = LayoutInflater.from(parent.context)
 
         val binding = ItemCoinBinding.inflate(inflater, parent, false)
 
-        return NotificationsViewHolder(binding)
+        return CoinListViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: NotificationsViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: CoinListViewHolder, position: Int) {
         val coin = coinList[position]
 
-        holder.binding.coinNameTextview.text = "Updated"
+        holder.binding.coinNameTextview.text = coin.name
         holder.binding.coinSymbolTextview.text = coin.symbol
 
         holder.binding.itemCardview.setOnClickListener {
-            val action = AllCoinFragmentDirections.actionAllCoinFragmentToCoinDetailFragment(
-                coin.id, userId
+            NavigationManager().actionAllCoinFragmentToCoinDetailFragment(
+                holder.itemView,
+                coin.id,
+                userId
             )
-            Navigation.findNavController(holder.binding.itemCardview).navigate(action)
         }
     }
 
@@ -51,6 +53,7 @@ class NotificationsAdapter : RecyclerView.Adapter<NotificationsViewHolder>() {
     }
 }
 
-class NotificationsViewHolder(val binding: ItemCoinBinding) :
+class CoinListViewHolder(val binding: ItemCoinBinding) :
     RecyclerView.ViewHolder(binding.root) {
+
 }

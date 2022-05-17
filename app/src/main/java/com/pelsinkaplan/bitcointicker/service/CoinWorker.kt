@@ -18,9 +18,8 @@ class CoinWorker(
 ) : Worker(appContext, workerParams) {
 
     override fun doWork(): Result {
-        val coinId = inputData.getString("coinId")
-        val userId = inputData.getString("userId")
-        createNotification(coinId!!, userId!!)
+        val data = inputData.keyValueMap
+        createNotification(data["coinId"].toString(), data["userId"].toString())
         return Result.success()
     }
 
@@ -37,8 +36,7 @@ class CoinWorker(
         database.get().addOnSuccessListener {
             if (it.exists()) {
                 notifList = it.value as List<String>
-                if (!notifList.contains(coinId))
-                    database.setValue(notifList.plus(coinId))
+                database.setValue(notifList.plus(coinId))
             }
         }
 

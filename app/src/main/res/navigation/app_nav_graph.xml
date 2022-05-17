@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/allCoinFragment"
-        android:name="com.pelsinkaplan.bitcointicker.ui.allcoin.AllCoinFragment"
+        android:name="com.pelsinkaplan.bitcointicker.ui.fragment.AllCoinFragment"
         android:label="fragment_all_coin"
         tools:layout="@layout/all_coin_fragment" >
         <action
@@ -22,10 +22,13 @@
         <action
             android:id="@+id/action_allCoinFragment_to_favoritesFragment"
             app:destination="@id/favoritesFragment" />
+        <action
+            android:id="@+id/action_allCoinFragment_to_notificationsFragment"
+            app:destination="@id/notificationsFragment" />
     </fragment>
     <fragment
         android:id="@+id/coinDetailFragment"
-        android:name="com.pelsinkaplan.bitcointicker.ui.coindetail.CoinDetailFragment"
+        android:name="com.pelsinkaplan.bitcointicker.ui.fragment.CoinDetailFragment"
         android:label="fragment_coin_detail"
         tools:layout="@layout/coin_detail_fragment" >
         <argument
@@ -37,7 +40,7 @@
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
-        android:name="com.pelsinkaplan.bitcointicker.ui.register.RegisterFragment"
+        android:name="com.pelsinkaplan.bitcointicker.ui.fragment.RegisterFragment"
         android:label="register_fragment"
         tools:layout="@layout/register_fragment" >
         <action
@@ -46,7 +49,7 @@
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.pelsinkaplan.bitcointicker.ui.login.LoginFragment"
+        android:name="com.pelsinkaplan.bitcointicker.ui.fragment.LoginFragment"
         android:label="login_fragment"
         tools:layout="@layout/login_fragment" >
         <action
@@ -58,12 +61,21 @@
     </fragment>
     <fragment
         android:id="@+id/favoritesFragment"
-        android:name="com.pelsinkaplan.bitcointicker.ui.favorites.FavoritesFragment"
+        android:name="com.pelsinkaplan.bitcointicker.ui.fragment.FavoritesFragment"
         android:label="favorites_fragment"
         tools:layout="@layout/favorites_fragment" >
         <action
             android:id="@+id/action_favoritesFragment_to_coinDetailFragment"
             app:destination="@id/coinDetailFragment" />
+        <argument
+            android:name="userId"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/notificationsFragment"
+        android:name="com.pelsinkaplan.bitcointicker.ui.fragment.NotificationsFragment"
+        android:label="notifications_fragment"
+        tools:layout="@layout/notifications_fragment" >
         <argument
             android:name="userId"
             app:argType="string" />
