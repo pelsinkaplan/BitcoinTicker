@@ -19,5 +19,23 @@ class BitcoinRepository @Inject constructor(
     suspend fun getCoinDetail(id: String): CoinDetail {
         return apiService.getCoinsById(id)
     }
+
+    suspend fun fetchCoinMarketDataDaily(coinId: String, days: Int): List<Pair<Double, Double>> {
+        return try {
+            val response = apiService.getCoinMarketDataDaily(coinId, days = days)
+            response.prices.map { Pair(it[0], it[1]) } // Timestamp ve fiyat çiftleri.
+        } catch (e: Exception) {
+            emptyList()
+        }
+    }
+
+    suspend fun getCoinMarketDataHourly(coinId: String): List<Pair<Double, Double>> {
+        return try {
+            val response = apiService.getCoinMarketDataHourly(coinId)
+            response.prices.map { Pair(it[0], it[1]) } // Timestamp ve fiyat çiftleri.
+        } catch (e: Exception) {
+            emptyList()
+        }
+    }
 }
 

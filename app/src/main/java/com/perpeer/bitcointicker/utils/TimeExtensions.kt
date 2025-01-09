@@ -6,8 +6,9 @@ import java.time.LocalDateTime
 /**
  * Created by Pelşin KAPLAN on 6.01.2025.
  */
-fun LocalDateTime.isMoreThanFiveMinutesAgo(): Boolean {
+fun LocalDateTime?.isMoreThanFiveMinutesAgo(): Boolean {
+    if (this == null) return true
     val now = LocalDateTime.now() // Şu anki zaman
     val duration = Duration.between(this, now) // İki tarih/zaman arasındaki fark
-    return duration.toMinutes() > 5 // 5 dakikadan fazla olup olmadığını kontrol et
+    return duration.toMinutes() > 2 // 5 dakikadan fazla olup olmadığını kontrol et
 }

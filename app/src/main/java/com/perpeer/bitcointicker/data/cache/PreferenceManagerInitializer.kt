@@ -1,8 +1,7 @@
-package com.perpeer.bitcointicker.utils
+package com.perpeer.bitcointicker.data.cache
 
 import android.content.Context
 import androidx.startup.Initializer
-import com.perpeer.bitcointicker.data.cache.PreferenceManager
 
 /**
  * Created by Pelşin KAPLAN on 6.01.2025.

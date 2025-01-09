@@ -99,6 +99,8 @@ dependencies {
     implementation(libs.firebase.analytics)
     implementation(libs.firebase.crashlytics.ktx)
     implementation(libs.firebase.analytics.ktx)
+    implementation(libs.firebase.firestore.ktx)
+    implementation(libs.firebase.auth.ktx)
 
     // Glide
     implementation("com.github.skydoves:landscapist-glide:1.3.7")
@@ -114,5 +116,10 @@ dependencies {
 
     // Encypted Shared Pref
     implementation("androidx.security:security-crypto-ktx:1.1.0-alpha06")
+
+    implementation("androidx.compose.material:material:1.5.0")
+
+    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
+
 
 }

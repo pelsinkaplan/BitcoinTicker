@@ -8,9 +8,9 @@ import com.perpeer.bitcointicker.data.cache.SharedPreferenceKeys.ALL_COINS
 import com.perpeer.bitcointicker.data.cache.SharedPreferenceKeys.COINS_SAVE_TIME
 import com.perpeer.bitcointicker.data.cache.SharedPreferenceKeys.FAVORITE_COINS
 import com.perpeer.bitcointicker.data.cache.SharedPreferenceKeys.PREFS
+import com.perpeer.bitcointicker.data.model.AllCoins
 import com.perpeer.bitcointicker.data.model.Coin
 import com.perpeer.bitcointicker.data.model.FavoriteCoins
-import java.time.LocalDate
 import java.time.LocalDateTime
 import javax.inject.Inject
 
@@ -42,13 +42,13 @@ class PreferenceManager @Inject constructor(val context: Context) {
         prefs.set(key, value)
     }
 
-    var coinsSaveTime:LocalDateTime?
+    var coinsSaveTime: LocalDateTime?
         get() = prefs.get(COINS_SAVE_TIME)
         set(value) {
             prefs.set(COINS_SAVE_TIME, value)
         }
 
-    var allCoins: FavoriteCoins?
+    var allCoins: AllCoins?
         get() = prefs.get(ALL_COINS)
         set(value) {
             prefs.set(ALL_COINS, value)
@@ -65,6 +65,8 @@ class PreferenceManager @Inject constructor(val context: Context) {
             val tempList = favoriteCoins?.favoriteCoinList
             tempList?.add(coin)
             favoriteCoins = tempList?.let { FavoriteCoins(it) }
+        } else if (favoriteCoins?.favoriteCoinList == null) {
+            favoriteCoins = FavoriteCoins(arrayListOf(coin))
         }
     }
 

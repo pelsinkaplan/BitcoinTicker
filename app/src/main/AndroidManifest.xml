@@ -33,7 +33,7 @@
             tools:node="merge">
 
             <meta-data
-                android:name="com.perpeer.bitcointicker.utils.PreferenceManagerInitializer"
+                android:name="com.perpeer.bitcointicker.data.cache.PreferenceManagerInitializer"
                 android:value="androidx.startup" />
         </provider>
     </application>
