@@ -1,6 +1,11 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.google.services)
+    alias(libs.plugins.hilt) // Hilt plugin'i buraya eklenir
+    kotlin("plugin.serialization") version "1.9.0" // Kotlin versiyonunuza göre değiştirin
+    id("org.jetbrains.kotlin.kapt") // kapt Plugin
+    alias(libs.plugins.firebase.crashlytics)
 }
 
 android {
@@ -17,6 +22,12 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
+        }
+        // Room schema location to avoid warnings
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments["room.schemaLocation"] = "$projectDir/schemas"
+            }
         }
     }
 
@@ -66,4 +77,58 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    // Retrofit
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.11")
+
+    // Hilt
+    implementation(libs.hilt.android) // Hilt kütüphanesi
+    kapt(libs.hilt.android.compiler) // Hilt için KAPT
+    implementation(libs.hilt.navigation.compose) // Compose ile Hilt desteği
+    implementation(libs.androidx.hilt.work.v100)
+    kapt("androidx.hilt:hilt-compiler:1.2.0")
+
+
+    // Coroutines
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
+
+    // Navigation
+    implementation(libs.navigation.compose)
+
+    // Firebase
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
+    implementation(libs.firebase.crashlytics.ktx)
+    implementation(libs.firebase.analytics.ktx)
+    implementation(libs.firebase.firestore.ktx)
+    implementation(libs.firebase.auth.ktx)
+
+    // Glide
+    implementation("com.github.skydoves:landscapist-glide:1.3.7")
+
+    // Room
+    implementation("androidx.room:room-runtime:2.4.2")
+    annotationProcessor("androidx.room:room-compiler:2.4.2")
+    implementation("androidx.room:room-ktx:2.4.2")
+    kapt("androidx.room:room-compiler:2.4.2")
+
+    // Initializer
+    implementation("androidx.startup:startup-runtime:1.2.0-alpha02")
+
+    // Encypted Shared Pref
+    implementation("androidx.security:security-crypto-ktx:1.1.0-alpha06")
+
+    implementation("androidx.compose.material:material:1.5.0")
+
+    // Charts
+    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
+
+    // WorkManager
+    implementation("androidx.work:work-runtime-ktx:2.8.1")
+    implementation("androidx.hilt:hilt-work:1.1.0")
+    kapt("androidx.hilt:hilt-compiler:1.0.0")
+
+
 }
