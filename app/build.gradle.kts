@@ -87,6 +87,9 @@ dependencies {
     implementation(libs.hilt.android) // Hilt kütüphanesi
     kapt(libs.hilt.android.compiler) // Hilt için KAPT
     implementation(libs.hilt.navigation.compose) // Compose ile Hilt desteği
+    implementation(libs.androidx.hilt.work.v100)
+    kapt("androidx.hilt:hilt-compiler:1.2.0")
+
 
     // Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
@@ -119,7 +122,13 @@ dependencies {
 
     implementation("androidx.compose.material:material:1.5.0")
 
+    // Charts
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
+
+    // WorkManager
+    implementation("androidx.work:work-runtime-ktx:2.8.1")
+    implementation("androidx.hilt:hilt-work:1.1.0")
+    kapt("androidx.hilt:hilt-compiler:1.0.0")
 
 
 }

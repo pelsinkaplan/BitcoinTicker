@@ -27,7 +27,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -43,9 +42,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.perpeer.bitcointicker.data.model.Coin
+import com.perpeer.bitcointicker.data.model.FirestoreCoin
+import com.perpeer.bitcointicker.ui.components.CustomSlider
 import com.perpeer.bitcointicker.ui.components.LineChartView
 import com.perpeer.bitcointicker.viewmodel.CoinDetailViewModel
 import com.skydoves.landscapist.glide.GlideImage
@@ -67,6 +70,7 @@ fun CoinDetailScreen(
     val selectedCoinDetail by viewModel.coinDetail.collectAsState()
     val isFavorite by viewModel.isFavorite.collectAsState()
     val marketData by viewModel.marketData.collectAsState()
+    val context = LocalContext.current
 
     LaunchedEffect(selectedCoin.id, daysInterval, hoursInterval) {
         viewModel.fetchCoinDetail(selectedCoin.id)
@@ -88,7 +92,17 @@ fun CoinDetailScreen(
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { viewModel.toggleFavorite(selectedCoin) },
+                onClick = {
+                    viewModel.toggleFavorite(
+                        context = context,
+                        FirestoreCoin(
+                            id = selectedCoin.id,
+                            symbol = selectedCoin.symbol,
+                            name = selectedCoin.name,
+                            timeInterval = refreshInterval
+                        )
+                    )
+                },
                 containerColor = MaterialTheme.colorScheme.primary,
                 shape = RoundedCornerShape(16.dp),
                 modifier = Modifier
@@ -125,7 +139,9 @@ fun CoinDetailScreen(
                             Spacer(modifier = Modifier.width(4.dp))
                             Text(
                                 text = selectedCoin.name + "(${selectedCoin.symbol})",
-                                style = MaterialTheme.typography.headlineMedium
+                                style = MaterialTheme.typography.headlineMedium,
+                                overflow = TextOverflow.Ellipsis,
+                                maxLines = 1
                             )
                         }
 
@@ -243,21 +259,28 @@ fun CoinDetailScreen(
 
 
                 // Açıklama
-                Text(
-                    text = "About:",
-                    style = MaterialTheme.typography.labelMedium,
-                    modifier = Modifier.padding(bottom = 4.dp)
-                )
-                Text(
-                    text = coin.description.en ?: "No description available.",
-                    style = MaterialTheme.typography.bodySmall,
-                    modifier = Modifier.padding(bottom = 16.dp)
-                )
+                if (coin.description.en.isNotEmpty()) {
+                    Text(
+                        text = "About:",
+                        style = MaterialTheme.typography.labelMedium,
+                        modifier = Modifier.padding(bottom = 4.dp)
+                    )
+                    Text(
+                        text = coin.description.en ?: "No description available.",
+                        style = MaterialTheme.typography.bodySmall,
+                        modifier = Modifier.padding(bottom = 16.dp)
+                    )
+                }
 
-                RefreshIntervalSlider(
+
+                CustomSlider(
                     modifier = Modifier.padding(bottom = 32.dp),
                     currentValue = refreshInterval,
-                    onValueChange = { refreshInterval = it },
+                    onValueChange = {
+                        refreshInterval = it
+                        if (isFavorite)
+                            viewModel.scheduleWork(context = context, coin.id, it)
+                    },
                 )
                 Spacer(modifier = Modifier.height(16.dp))
 
@@ -267,48 +290,6 @@ fun CoinDetailScreen(
             style = MaterialTheme.typography.labelLarge,
             modifier = Modifier.padding(16.dp)
         )
-    }
-}
-
-@Composable
-fun RefreshIntervalSlider(
-    modifier: Modifier = Modifier,
-    currentValue: Long,
-    onValueChange: (Long) -> Unit
-) {
-    var sliderValue by remember { mutableStateOf(currentValue.toFloat()) }
-    var isDragging by remember { mutableStateOf(false) }
-
-    Column(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(16.dp)
-    ) {
-        Text(
-            text = "Refresh Interval: ${sliderValue.toLong()} seconds",
-            style = MaterialTheme.typography.bodyLarge
-        )
-
-        Slider(
-            value = sliderValue,
-            onValueChange = {
-                sliderValue = it
-                isDragging = true // Indicate that the user is dragging the slider
-            },
-            onValueChangeFinished = {
-                isDragging = false // Dragging is complete
-                onValueChange(sliderValue.toLong()) // Commit the final value
-            },
-            valueRange = 5f..60f, // Allow intervals from 5 to 60 seconds
-            steps = 10 // Number of steps in the slider (optional)
-        )
-        if (isDragging) {
-            Text(
-                text = "Adjusting interval...",
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.primary
-            )
-        }
     }
 }
 

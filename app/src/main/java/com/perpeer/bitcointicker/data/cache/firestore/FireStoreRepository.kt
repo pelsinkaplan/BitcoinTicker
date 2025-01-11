@@ -3,6 +3,7 @@ package com.perpeer.bitcointicker.data.cache.firestore
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.perpeer.bitcointicker.data.model.Coin
+import com.perpeer.bitcointicker.data.model.FirestoreCoin
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
@@ -23,13 +24,13 @@ class FireStoreRepository @Inject constructor(
     }
 
     // this func gets favorite coins from firestore
-    suspend fun getFavoriteCoins(): List<Coin> {
+    suspend fun getFavoriteCoins(): List<FirestoreCoin> {
         val favoritesCollection = getUserFavoritesCollection() ?: return emptyList()
         return try {
             val snapshot = favoritesCollection.get().await()
             snapshot.documents.mapNotNull { doc ->
                 try {
-                    doc.toObject(Coin::class.java)
+                    doc.toObject(FirestoreCoin::class.java)
                 } catch (e: Exception) {
                     // Hangi döküman hatalı dönüştürülüyor, loglayın
                     println("Error converting document: ${doc.id}, ${e.message}")
@@ -55,7 +56,7 @@ class FireStoreRepository @Inject constructor(
     }
 
     // this func adds coin to favorites
-    suspend fun addCoinToFavorites(coin: Coin): Boolean {
+    suspend fun addCoinToFavorites(coin: FirestoreCoin): Boolean {
         val favoritesCollection = getUserFavoritesCollection() ?: return false
         return try {
             favoritesCollection.document(coin.id).set(coin).await()

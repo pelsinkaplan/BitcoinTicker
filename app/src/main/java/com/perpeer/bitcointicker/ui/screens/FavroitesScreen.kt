@@ -25,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.perpeer.bitcointicker.data.model.Coin
+import com.perpeer.bitcointicker.data.model.FirestoreCoin
 import com.perpeer.bitcointicker.ui.components.FavoritesListItem
 import com.perpeer.bitcointicker.viewmodel.FavoritesViewModel
 
@@ -32,7 +33,7 @@ import com.perpeer.bitcointicker.viewmodel.FavoritesViewModel
 @Composable
 fun FavoritesScreen(
     viewModel: FavoritesViewModel = hiltViewModel(),
-    onCoinClick: (Coin) -> Unit
+    onCoinClick: (FirestoreCoin) -> Unit
 ) {
     val isLoading by viewModel.isLoading.collectAsState()
     val favorites by viewModel.favoriteCoins.collectAsState()

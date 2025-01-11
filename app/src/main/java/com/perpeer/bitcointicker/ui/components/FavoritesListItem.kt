@@ -27,6 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.perpeer.bitcointicker.data.model.Coin
+import com.perpeer.bitcointicker.data.model.FirestoreCoin
 import kotlin.random.Random
 
 /**
@@ -35,7 +36,7 @@ import kotlin.random.Random
 
 @Composable
 fun FavoritesListItem(
-    item: Coin, onClick: (Coin) -> Unit,
+    item: FirestoreCoin, onClick: (FirestoreCoin) -> Unit,
     onRemoveClick: () -> Unit
 ) {
     Card(

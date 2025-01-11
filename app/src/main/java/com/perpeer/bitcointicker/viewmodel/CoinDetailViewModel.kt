@@ -1,12 +1,18 @@
 package com.perpeer.bitcointicker.viewmodel
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
+import androidx.work.workDataOf
 import com.github.mikephil.charting.data.CandleEntry
 import com.perpeer.bitcointicker.data.cache.firestore.FireStoreRepository
-import com.perpeer.bitcointicker.data.model.Coin
 import com.perpeer.bitcointicker.data.model.CoinDetail
+import com.perpeer.bitcointicker.data.model.FirestoreCoin
 import com.perpeer.bitcointicker.data.repository.BitcoinRepository
+import com.perpeer.bitcointicker.data.work.PriceCheckWorker
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -14,6 +20,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 /**
@@ -23,7 +30,7 @@ import javax.inject.Inject
 @HiltViewModel
 class CoinDetailViewModel @Inject constructor(
     private val repository: BitcoinRepository,
-    private val fireStoreRepository: FireStoreRepository
+    private val fireStoreRepository: FireStoreRepository,
 ) : ViewModel() {
     private val _coinDetail = MutableStateFlow<CoinDetail?>(null)
     val coinDetail: StateFlow<CoinDetail?> = _coinDetail
@@ -50,7 +57,7 @@ class CoinDetailViewModel @Inject constructor(
         refreshJob = viewModelScope.launch {
             while (isActive) {
                 fetchCoinDetail(coinId)
-                delay(intervalSeconds * 1000)
+                delay(intervalSeconds * 1000 * 60)
             }
         }
     }
@@ -60,6 +67,24 @@ class CoinDetailViewModel @Inject constructor(
         refreshJob = null
     }
 
+    fun scheduleWork(context: Context, coinId: String, intervalMinutes: Long) {
+        val workRequest = PeriodicWorkRequestBuilder<PriceCheckWorker>(
+            intervalMinutes, TimeUnit.MINUTES
+        )
+            .setInputData(
+                workDataOf(
+                    "favorite_coin_id" to coinId
+                )
+            )
+            .build()
+
+        WorkManager.getInstance(context).enqueueUniquePeriodicWork(
+            coinId, // Coin'e özgü bir iş ismi
+            ExistingPeriodicWorkPolicy.REPLACE, // Önceki iş varsa değiştir
+            workRequest
+        )
+    }
+
     fun checkItemIsFavorite(coinId: String) {
         viewModelScope.launch {
             val result = fireStoreRepository.checkItemIsFavorite(coinId)
@@ -67,11 +92,13 @@ class CoinDetailViewModel @Inject constructor(
         }
     }
 
-    fun toggleFavorite(coin: Coin) {
+    fun toggleFavorite(context: Context, coin: FirestoreCoin) {
         viewModelScope.launch {
             if (_isFavorite.value) {
+                WorkManager.getInstance(context).cancelUniqueWork(coin.id)
                 fireStoreRepository.removeCoinFromFavorites(coin.id)
             } else {
+                scheduleWork(context, coin.id, coin.timeInterval)
                 fireStoreRepository.addCoinToFavorites(coin)
             }
             _isFavorite.value = !_isFavorite.value

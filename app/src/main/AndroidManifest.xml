@@ -31,10 +31,16 @@
             android:authorities="${applicationId}.androidx-startup"
             android:exported="false"
             tools:node="merge">
-
             <meta-data
                 android:name="com.perpeer.bitcointicker.data.cache.PreferenceManagerInitializer"
                 android:value="androidx.startup" />
+            <meta-data
+                android:name="com.perpeer.bitcointicker.data.work.WorkManagerInitializer"
+                android:value="androidx.startup" />
+            <meta-data
+                android:name="androidx.work.WorkManagerInitializer"
+                android:value="androidx.startup"
+                tools:node="remove" />
         </provider>
     </application>
 </manifest>

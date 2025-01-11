@@ -1,5 +1,6 @@
 [versions]
 agp = "8.5.2"
+hiltWorkVersion = "1.0.0"
 kotlin = "1.9.0"
 coreKtx = "1.7.0"
 junit = "4.13.2"
@@ -19,9 +20,12 @@ firebaseBom = "33.6.0"
 firebaseCrashlyticsKtx = "19.2.1"
 gson = "2.10.1"
 kotlinxSerializationJson = "1.6.0"
+hiltCommon = "1.1.0-alpha01"
+hiltWork = "1.1.0-alpha01"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-hilt-work-v100 = { module = "androidx.hilt:hilt-work", version.ref = "hiltWorkVersion" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -47,6 +51,8 @@ firebase-crashlytics-ktx = { module = "com.google.firebase:firebase-crashlytics-
 firebase-firestore-ktx = { module = "com.google.firebase:firebase-firestore-ktx" }
 firebase-auth-ktx = { module = "com.google.firebase:firebase-auth", version.ref = "firebaseAuth" }
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
+androidx-hilt-common = { group = "androidx.hilt", name = "hilt-common", version.ref = "hiltCommon" }
+androidx-hilt-work = { group = "androidx.hilt", name = "hilt-work", version.ref = "hiltWork" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
