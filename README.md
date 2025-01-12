@@ -4,6 +4,17 @@ Bitcoin Ticker is a feature-rich mobile application built to provide real-time c
 
 ---
 
+## Screenshots
+| App Screen Record 1 |App Screen Record 2 |    Sign In    | Coins Screen | Coin Detail Screen | 
+|:----------------:|:-----------------:|:-------------------:|:------------------:|:------------------:|
+| ![app-screen-record-1][] |![app-screen-record-2][] | ![sign-in-screen][] | ![coins-screen][] | ![coin-detail-screen][] |
+
+[app-screen-record-1]: https://github.com/pelsinkaplan/BitcoinTicker/blob/main/screen-record-1.gif?raw=true
+[app-screen-record-2]: https://github.com/pelsinkaplan/BitcoinTicker/blob/main/screen-record-2.gif?raw=true
+[sign-in-screen]: https://github.com/pelsinkaplan/BitcoinTicker/blob/main/sign-in.png?raw=true
+[coins-screen]: https://github.com/pelsinkaplan/BitcoinTicker/blob/main/coins.png?raw=true
+[coin-detail-screen]: https://github.com/pelsinkaplan/BitcoinTicker/blob/main/coin-detail.png?raw=true
+
 ## Features 🌟
 
 ### 1. **Real-Time Cryptocurrency Data**
@@ -97,6 +108,7 @@ The app follows the **MVVM (Model-View-ViewModel)** architectural pattern with a
    - Supports daily and hourly data views.
 
 ### 5. **Analytics and Crash Reporting**
+   - Analytics and Crashlytics is not using actively but integration maded.
    - User interactions are tracked via Firebase Analytics.
    - Crashes are monitored and reported using Firebase Crashlytics.
 
@@ -109,6 +121,7 @@ app/
 ├── data/
 │   ├── cache/                 # Firestore-related data handling
 │   ├── model/                 # Data models for API and Firestore
+│   ├── network/               # Retrofit and API service
 │   ├── repository/            # Repositories for data management
 │   ├── work/                  # WorkManager tasks
 ├── di/                        # Dependency injection modules
@@ -117,10 +130,10 @@ app/
 │   ├── navigation/            # Navigation setup with NavHostController
 │   ├── screens/               # Individual screen implementations
 ├── utils/                     # Utility classes and helpers
+│   ├── analytics/             # Connection of Firebase analytics
+│   ├── crashlytics/           # Connection of Firebase crashlytics
 ├── viewmodel/                 # ViewModels for state and UI logic
 ```
 
 ---
-
-
 
